@@ -1,0 +1,12 @@
+[build]
+command = "npm ci"
+publish = "."
+
+[functions]
+directory = "netlify/functions"
+node_bundler = "esbuild"
+
+[[redirects]]
+from = "/graphql"
+to = "/.netlify/functions/graphql"
+status = 200
