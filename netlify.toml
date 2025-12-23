@@ -1,0 +1,26 @@
+[build]
+  command = "npm install"
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"
+  
+# Optional: Create cleaner URLs
+[[redirects]]
+  from = "/graphql"
+  to = "/.netlify/functions/graphql"
+  status = 200
+
+# Optional: Serve Apollo Studio at root
+[[redirects]]
+  from = "/"
+  to = "/.netlify/functions/graphql"
+  status = 200
+
+# Optional: Handle CORS preflight requests
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Headers = "*"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
