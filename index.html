@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GraphQL API</title>
+</head>
+<body>
+    <h1>GraphQL API Running on Netlify</h1>
+    <p>Access your GraphQL API at: <code>/api/graphql</code></p>
+    <p>Or directly at: <code>/.netlify/functions/graphql</code></p>
+    
+    <h2>Test Queries:</h2>
+    <pre>
+query {
+  mainCards {
+    title
+    image
+  }
+  
+  animals {
+    title
+    image
+  }
+}
+    </pre>
+</body>
+</html>

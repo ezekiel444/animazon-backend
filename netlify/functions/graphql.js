@@ -1,28 +1,34 @@
 import { ApolloServer } from '@apollo/server';
-import { expressMiddleware } from '@apollo/server/express4';
-import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
-import express from 'express';
-import http from 'http';
-import cors from 'cors';
-import { json } from 'body-parser';
+import { startServerAndCreateNetlifyFunction } from '@as-integrations/netlify';
+import db from '../db.js';
+import typeDefs from '../schema.js';
+import Query from "../resolvers/Query.js";
+import Mutation from "../resolvers/Mutation.js";
+import Animal from "../resolvers/Animal.js";
+import Category from "../resolvers/Category.js";
 
-const app = express();
-const httpServer = http.createServer(app);
-
+// Create Apollo Server instance (same as before)
 const server = new ApolloServer({
   typeDefs,
-  resolvers,
-  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  resolvers: {
+    Query,
+    Mutation,
+    Animal,
+    Category
+  },
+  introspection: true, // Enable GraphQL playground
 });
 
-await server.start();
-
-app.use(
-  '/',
-  cors(),
-  json(),
-  expressMiddleware(server),
+// Create the Netlify Function handler with context
+const handler = startServerAndCreateNetlifyFunction(
+  server,
+  {
+    context: async () => ({
+      mainCards: db.mainCards,
+      animals: db.animals,
+      categories: db.categories
+    })
+  }
 );
 
-// Netlify serverless function handler
-export const handler = app;
+export { handler };
