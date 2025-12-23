@@ -1,7 +1,6 @@
 [build]
-  command = "npm ci"
+  command = "npm ci --legacy-peer-deps"
   publish = "."
-  functions = "netlify/functions"
 
 [functions]
   node_bundler = "esbuild"
