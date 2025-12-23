@@ -1,15 +1,12 @@
 [build]
-  command = "npm run build"
-  functions = "netlify/functions"
+  command = "npm ci --legacy-peer-deps"
   publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
 
 [[redirects]]
   from = "/graphql"
   to = "/.netlify/functions/graphql"
-  status = 200
-
-# Optional: Add these if you want a GraphQL playground
-[[redirects]]
-  from = "/"
-  to = "/index.html"
   status = 200

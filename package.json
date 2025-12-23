@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "GraphQL Server for Netlify",
   "main": "dev-server.js",
   "type": "module",
   "scripts": {
@@ -10,18 +10,19 @@
     "build": "echo 'No build step required'",
     "netlify:dev": "netlify dev"
   },
-  "keywords": [],
+  "keywords": ["graphql", "apollo", "netlify"],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@apollo/server": "^5.2.0",
     "@as-integrations/netlify": "^2.0.0",
     "graphql": "^16.12.0",
-    "graphql-tag": "^2.12.6",
-    "nodemon": "^3.1.11",
-    "uuid": "^13.0.0"
+    "graphql-tag": "^2.12.6"
   },
   "devDependencies": {
-    "netlify-cli": "^17.0.0"
+    "nodemon": "^3.1.11"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
