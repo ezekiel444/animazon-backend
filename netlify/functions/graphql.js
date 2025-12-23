@@ -1,6 +1,6 @@
 // netlify/functions/graphql.js - NETLIFY PRODUCTION ONLY
 import { ApolloServer } from '@apollo/server';
-import { netlifyHandler } from '@as-integrations/netlify-functions';
+import { startServerAndCreateLambdaHandler } from '@as-integrations/aws-lambda';
 import db from '../db.js';
 import typeDefs from '../schema.js';
 import Query from "../resolvers/Query.js";
@@ -18,10 +18,17 @@ const server = new ApolloServer({
   }
 });
 
-export default netlifyHandler(server, {
-  context: () => ({
-    mainCards: db.mainCards,
-    animals: db.animals,
-    categories: db.categories
-  })
-});
+const graphqlHandler = startServerAndCreateLambdaHandler(
+  server,
+  {
+    context: async (request) => ({
+      // Your DB data—loaded once per cold start (efficient for Netlify)
+      mainCards: db.mainCards,
+      animals: db.animals,
+      categories: db.categories
+      // Add headers/user from request if needed: request.headers, request.user, etc.
+    })
+  }
+);
+
+export default graphqlHandler;  // Netlify expects default export for handler
