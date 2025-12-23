@@ -172,7 +172,7 @@ const animals = [
       }
   ]
 
-module.exports = {
+export default {
     mainCards,
     animals,
     categories

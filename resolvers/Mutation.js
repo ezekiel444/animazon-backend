@@ -1,4 +1,4 @@
-const { v4 } = require("uuid")
+import { v4 } from "uuid"
 
 const Mutation = {
     addAnimal: (parent, {image, title, rating, price, description, slug, stock, onSale, category}, {animals}) => {
@@ -31,7 +31,7 @@ const Mutation = {
     }
 }
 
-module.exports = Mutation
+export default Mutation
 
 // type Animal {
 //     id: ID!

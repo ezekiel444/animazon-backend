@@ -6,4 +6,4 @@ const Animal = {
       }  
 }
 
-module.exports = Animal
+export default Animal

@@ -1,27 +1,32 @@
-const { ApolloServer } = require('apollo-server');
-const { mainCards, animals, categories } = require('./db')
-const typeDefs = require('./schema')
-const Query = require("./resolvers/Query")
-const Mutation = require("./resolvers/Mutation")
-const Animal = require("./resolvers/Animal")
-const Category = require("./resolvers/Category")
+import { ApolloServer } from '@apollo/server';
+import { startStandaloneServer } from '@apollo/server/standalone';
+import db from './db.js';
+import typeDefs from './schema.js';
+import Query from "./resolvers/Query.js";
+import Mutation from "./resolvers/Mutation.js";
+import Animal from "./resolvers/Animal.js";
+import Category from "./resolvers/Category.js";
 
-  const server = new ApolloServer({ 
-    typeDefs, 
-    resolvers: {
-      Query,
-      Mutation,
-      Animal,
-      Category
-    },
-    context: {
-      mainCards,
-      animals,
-      categories
-    }
-  });
+const PORT = process.env.PORT || 4000;
 
-  // The `listen` method launches a web server.
-  server.listen().then(({ url }) => {
-    console.log(`🚀  Server ready at ${url}`);
-  });
+const server = new ApolloServer({ 
+  typeDefs, 
+  resolvers: {
+    Query,
+    Mutation,
+    Animal,
+    Category
+  }
+});
+
+// Apollo Server 4 uses startStandaloneServer
+const { url } = await startStandaloneServer(server, {
+  listen: { port: PORT },
+  context: async () => ({
+    mainCards: db.mainCards,
+    animals: db.animals,
+    categories: db.categories
+  })
+});
+
+console.log(`🚀 Server ready at ${url}`);
