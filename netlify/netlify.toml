@@ -1,7 +1,7 @@
 [build]
-  command = "npm ci --legacy-peer-deps"
-  publish = "."
-  functions = "netlify/functions"
+  command = "pnpm install --frozen-lockfile && pnpm build"
+
+
 
 [functions]
   node_bundler = "esbuild"

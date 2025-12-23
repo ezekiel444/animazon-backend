@@ -1,4 +1,4 @@
-// dev-server.js - Keep this for local development
+// dev-server.js - LOCAL DEVELOPMENT ONLY
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import db from './db.js';
@@ -20,7 +20,6 @@ const server = new ApolloServer({
   }
 });
 
-// Apollo Server 4 uses startStandaloneServer
 const { url } = await startStandaloneServer(server, {
   listen: { port: PORT },
   context: async () => ({
